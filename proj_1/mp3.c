@@ -33,6 +33,11 @@ void insert(char *name, char *song, int runtime, mp3_t *prev, mp3_t *next)
   }
 }
 
+void delete()
+{
+
+}
+
 void freeList()
 {
   mp3_t *temp;

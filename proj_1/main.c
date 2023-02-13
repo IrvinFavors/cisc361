@@ -60,7 +60,21 @@ int main()
                 else
                   print();
                 break;
-        case 3: printf("delete function has not been implemented...\n");
+        case 3: if (head == NULL)
+		  printf("List is Empty\n");
+		else {
+		  printf("Enter Artist's name: \n");
+		  if (fgets(name, BUFFERSIZE, stdin) != NULL){
+		    len = strlen(name);
+		    name[len - 1] = '\0';
+		    printf("Enter Song title: \n");
+		    if (fgets(song, BUFFERSIZE, stdin) != NULL){
+			len = strlen(song);
+			song[len - 1] = '\0';
+			delete(name, song);
+		    }
+		  }	
+		}
                 break;
         case 4: freeList();
                 return 0;
