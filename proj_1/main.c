@@ -9,6 +9,7 @@ mp3_t *head;
 
 void insert(char *name, char *song, int runtime, mp3_t *prev, mp3_t *next);
 void print();
+void delete(char *name, char *song);
 void freeList();
 
 int main()

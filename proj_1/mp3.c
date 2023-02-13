@@ -9,7 +9,6 @@ void insert(char *name, char *song, int runtime, mp3_t *prev, mp3_t *next)
   mp3 = (mp3_t *) malloc(sizeof(mp3_t));        // malloc space for MP3
   mp3->name = (char *) malloc(strlen(name) + 1);  // malloc space for name
   mp3->song = (char *) malloc(strlen(song) + 1);
-  mp3->runtime = (int) malloc(sizeof(int));
   mp3->prev = (mp3_t *) malloc(sizeof(mp3_t));
   mp3->next = (mp3_t *) malloc(sizeof(mp3_t));
 
@@ -33,9 +32,32 @@ void insert(char *name, char *song, int runtime, mp3_t *prev, mp3_t *next)
   }
 }
 
-void delete()
+void delete(char *name, char *song)
 {
-
+  mp3_t *temp = head;
+  
+  if (strcmp(temp->name, name) == 0 && strcmp(temp->song, song) == 0){
+    head = head->next;
+    free(temp->name);
+    free(temp->song);
+    free(temp);
+    printf("Successfully Deleted!!");
+    return;
+  } 
+  
+  while (temp != NULL){
+    if (strcmp(temp->name, name) == 0 && strcmp(temp->song, song) == 0) break;
+    temp = temp->next;
+  }
+  if (temp == NULL) printf("Track does not exit!");
+  else{
+    free(temp->name);
+    free(temp->song);
+    temp->prev->next = temp->next;
+    free(temp);
+    printf("Successfully Deleted!!");
+  }
+  
 }
 
 void freeList()
@@ -48,7 +70,6 @@ void freeList()
     head = head->next; // point to next MP3 record
     free(temp->name);  // first free name inside MP3 record
     free(temp->song);
-    free(temp->runtime);
     free(temp->prev);
     free(temp->next);
     free(temp);        // then free MP3 record
