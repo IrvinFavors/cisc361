@@ -8,8 +8,9 @@
 mp3_t *head;
 
 void insert(char *name, char *song, int runtime, mp3_t *prev, mp3_t *next);
-void print();
-void delete(char *name, char *song);
+void printIO();
+void printRev();
+void delete(char *name);
 void freeList();
 
 int main()
@@ -24,9 +25,10 @@ int main()
     printf("\nList Operations\n");
     printf("===============\n");
     printf("(1) Insert\n");
-    printf("(2) Display\n");
-    printf("(3) Delete\n");
-    printf("(4) Exit\n");
+    printf("(2) Delete\n");
+    printf("(3) Print InOrder\n");
+    printf("(4) Print InReverse\n");
+    printf("(5) Exit\n");
     printf("Enter your choice : ");
     if (scanf("%d%c", &i, &c) <= 0) {          // use c to capture \n
         printf("Enter only an integer...\n");
@@ -57,27 +59,28 @@ int main()
                 insert(name, song, runtime, NULL, NULL);
                 break;
         case 2: if (head == NULL)
-                  printf("List is Empty\n");
-                else
-                  print();
-                break;
-        case 3: if (head == NULL)
 		  printf("List is Empty\n");
 		else {
 		  printf("Enter Artist's name: \n");
 		  if (fgets(name, BUFFERSIZE, stdin) != NULL){
 		    len = strlen(name);
 		    name[len - 1] = '\0';
-		    printf("Enter Song title: \n");
-		    if (fgets(song, BUFFERSIZE, stdin) != NULL){
-			len = strlen(song);
-			song[len - 1] = '\0';
-			delete(name, song);
-		    }
-		  }	
-		}
+		    delete(name);
+		  }
+		}	
                 break;
-        case 4: freeList();
+	case 3: if (head == NULL)
+		  printf("List is Empty\n");
+		else 
+		  printIO();
+		break;
+        case 4:
+		if (head == NULL)
+		  printf("List is Empty\n");
+		else
+		  printRev();
+		break;
+	case 5: freeList();
                 return 0;
         default: printf("Invalid option\n");
         }

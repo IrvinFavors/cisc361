@@ -32,32 +32,28 @@ void insert(char *name, char *song, int runtime, mp3_t *prev, mp3_t *next)
   }
 }
 
-void delete(char *name, char *song)
+void delete(char *name)
 {
-  mp3_t *temp = head;
-  
-  if (strcmp(temp->name, name) == 0 && strcmp(temp->song, song) == 0){
-    head = head->next;
-    free(temp->name);
-    free(temp->song);
-    free(temp);
-    printf("Successfully Deleted!!");
-    return;
-  } 
-  
+  mp3_t *temp = head, *rmv = NULL;
+
   while (temp != NULL){
-    if (strcmp(temp->name, name) == 0 && strcmp(temp->song, song) == 0) break;
-    temp = temp->next;
+    if (temp == head && strcmp(temp->name, name) == 0){
+      head = temp->next;
+      head->prev = NULL;
+      free(temp->name);
+      free(temp->song);
+      free(temp);
+      temp = head;
+    } else if (strcmp(temp->name, name) == 0) {
+        rmv = temp;
+	rmv->prev->next = temp->next;
+        temp = temp->next;
+        free(rmv->name);
+        free(rmv->song);
+	free(rmv);
+      }
+    else temp = temp->next;
   }
-  if (temp == NULL) printf("Track does not exit!");
-  else{
-    free(temp->name);
-    free(temp->song);
-    temp->prev->next = temp->next;
-    free(temp);
-    printf("Successfully Deleted!!");
-  }
-  
 }
 
 void freeList()
@@ -78,7 +74,7 @@ void freeList()
   printf("free %d MP3 records...\n", i);
 }
 
-void print()
+void printIO()
 {
   mp3_t *temp;
   int  i = 0;
@@ -89,4 +85,9 @@ void print()
     printf("(%d)--%s--%s--%d--\n", ++i, temp->name, temp->song, temp->runtime);
     temp = temp->next;
   }
+}
+
+void printRev()
+{
+
 }
